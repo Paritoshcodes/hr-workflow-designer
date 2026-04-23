@@ -269,44 +269,44 @@ export function GuidedTutorial() {
   return createPortal(
     <div className="fixed inset-0 z-[9999]" aria-modal="true" role="dialog">
       {/* Backdrop — darkened overlay with blur */}
-      <div className="absolute inset-0" onClick={close}>
-        <div
-          className="tutorial-backdrop"
-          style={{
-            top: 0,
-            left: 0,
-            width: windowSize.width,
-            height: cutout.top,
-          }}
-        />
-        <div
-          className="tutorial-backdrop"
-          style={{
-            top: cutout.top,
-            left: 0,
-            width: cutout.left,
-            height: cutout.height,
-          }}
-        />
-        <div
-          className="tutorial-backdrop"
-          style={{
-            top: cutout.top,
-            left: cutout.left + cutout.width,
-            width: windowSize.width - (cutout.left + cutout.width),
-            height: cutout.height,
-          }}
-        />
-        <div
-          className="tutorial-backdrop"
-          style={{
-            top: cutout.top + cutout.height,
-            left: 0,
-            width: windowSize.width,
-            height: windowSize.height - (cutout.top + cutout.height),
-          }}
-        />
-      </div>
+    <div className="absolute inset-0" onClick={close}>
+      <div
+        className="absolute bg-black/40 backdrop-blur-md"
+        style={{
+          top: 0,
+          left: 0,
+          width: windowSize.width,
+          height: cutout.top,
+        }}
+      />
+      <div
+        className="absolute bg-black/40 backdrop-blur-md"
+        style={{
+          top: cutout.top,
+          left: 0,
+          width: cutout.left,
+          height: cutout.height,
+        }}
+      />
+      <div
+        className="absolute bg-black/40 backdrop-blur-md"
+        style={{
+          top: cutout.top,
+          left: cutout.left + cutout.width,
+          width: windowSize.width - (cutout.left + cutout.width),
+          height: cutout.height,
+        }}
+      />
+      <div
+        className="absolute bg-black/40 backdrop-blur-md"
+        style={{
+          top: cutout.top + cutout.height,
+          left: 0,
+          width: windowSize.width,
+          height: windowSize.height - (cutout.top + cutout.height),
+        }}
+      />
+    </div>
 
       {/* Highlight cutout ring */}
       <div
