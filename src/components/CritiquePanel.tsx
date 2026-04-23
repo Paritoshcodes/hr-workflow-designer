@@ -39,13 +39,14 @@ function ScoreArc({ score }: { score: number }) {
   const radius = 40
   const circumference = 2 * Math.PI * radius
   const progress = (score / 100) * circumference
+
   const color =
     score >= 70 ? '#10b981' : score >= 40 ? '#f59e0b' : '#ef4444'
 
   return (
     <div className="flex flex-col items-center">
       <svg width="100" height="100" viewBox="0 0 100 100">
-        {/* Background arc */}
+        {/* Background */}
         <circle
           cx="50"
           cy="50"
@@ -54,7 +55,8 @@ function ScoreArc({ score }: { score: number }) {
           stroke="#2A2B32"
           strokeWidth="6"
         />
-        {/* Progress arc */}
+
+        {/* Progress */}
         <circle
           cx="50"
           cy="50"
@@ -62,13 +64,14 @@ function ScoreArc({ score }: { score: number }) {
           fill="none"
           stroke={color}
           strokeWidth="6"
-          strokeDasharray={`${progress} ${circumference}`}
-          strokeDashoffset={circumference / 4}
+          strokeDasharray={circumference}
+          strokeDashoffset={circumference - progress}
           strokeLinecap="round"
           transform="rotate(-90 50 50)"
           className="transition-all duration-1000 ease-out"
         />
-        {/* Score text */}
+
+        {/* Text */}
         <text
           x="50"
           y="48"
