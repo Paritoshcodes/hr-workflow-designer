@@ -123,6 +123,31 @@ body {
 	color: #F97316;
 }
 
+.tutorial-highlight {
+	transition:
+		top 480ms var(--ui-ease),
+		left 480ms var(--ui-ease),
+		width 480ms var(--ui-ease),
+		height 480ms var(--ui-ease),
+		opacity 220ms var(--ui-ease),
+		transform 480ms var(--ui-ease),
+		box-shadow 480ms var(--ui-ease);
+	will-change: top, left, width, height, transform, opacity;
+}
+
+.tutorial-backdrop {
+	position: absolute;
+	background: rgba(0, 0, 0, 0.45);
+	backdrop-filter: blur(6px);
+	-webkit-backdrop-filter: blur(6px);
+	transition:
+		top 480ms var(--ui-ease),
+		left 480ms var(--ui-ease),
+		width 480ms var(--ui-ease),
+		height 480ms var(--ui-ease),
+		opacity 220ms var(--ui-ease);
+}
+
 /* Canvas dot-grid background */
 .dot-grid-bg {
 	background-image: radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);

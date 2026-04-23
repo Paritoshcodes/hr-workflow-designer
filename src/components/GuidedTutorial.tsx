@@ -193,6 +193,27 @@ export function GuidedTutorial() {
   const totalSteps = TUTORIAL_STEPS.length
   const progress = ((currentStep + 1) / totalSteps) * 100
 
+  const getCutout = () => {
+    if (!highlightRect) {
+      return {
+        top: windowSize.height / 2,
+        left: windowSize.width / 2,
+        width: 0,
+        height: 0,
+      }
+    }
+
+    const pad = 6
+    const top = Math.max(0, highlightRect.top - pad)
+    const left = Math.max(0, highlightRect.left - pad)
+    const width = Math.min(windowSize.width - left, highlightRect.width + pad * 2)
+    const height = Math.min(windowSize.height - top, highlightRect.height + pad * 2)
+
+    return { top, left, width, height }
+  }
+
+  const cutout = getCutout()
+
   // Calculate tooltip position
   const getTooltipStyle = (): React.CSSProperties => {
     const tooltipWidth = 360
@@ -247,46 +268,58 @@ export function GuidedTutorial() {
 
   return createPortal(
     <div className="fixed inset-0 z-[9999]" aria-modal="true" role="dialog">
-      {/* SVG Mask Definition */}
-      <svg width="0" height="0" className="absolute pointer-events-none">
-        <defs>
-          <mask id="tutorial-hole">
-            <rect width="100%" height="100%" fill="white" />
-            <rect
-              x={highlightRect ? highlightRect.left - 6 : windowSize.width / 2}
-              y={highlightRect ? highlightRect.top - 6 : windowSize.height / 2}
-              width={highlightRect ? highlightRect.width + 12 : 0}
-              height={highlightRect ? highlightRect.height + 12 : 0}
-              rx={8}
-              fill="black"
-              className="transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
-            />
-          </mask>
-        </defs>
-      </svg>
-
-      {/* Backdrop — darkened overlay */}
-      <div 
-        className="absolute inset-0 bg-black/50 backdrop-blur-[4px] transition-opacity duration-500" 
-        onClick={close} 
-        style={{
-          maskImage: 'url(#tutorial-hole)',
-          WebkitMaskImage: 'url(#tutorial-hole)'
-        }}
-      />
+      {/* Backdrop — darkened overlay with blur */}
+      <div className="absolute inset-0" onClick={close}>
+        <div
+          className="tutorial-backdrop"
+          style={{
+            top: 0,
+            left: 0,
+            width: windowSize.width,
+            height: cutout.top,
+          }}
+        />
+        <div
+          className="tutorial-backdrop"
+          style={{
+            top: cutout.top,
+            left: 0,
+            width: cutout.left,
+            height: cutout.height,
+          }}
+        />
+        <div
+          className="tutorial-backdrop"
+          style={{
+            top: cutout.top,
+            left: cutout.left + cutout.width,
+            width: windowSize.width - (cutout.left + cutout.width),
+            height: cutout.height,
+          }}
+        />
+        <div
+          className="tutorial-backdrop"
+          style={{
+            top: cutout.top + cutout.height,
+            left: 0,
+            width: windowSize.width,
+            height: windowSize.height - (cutout.top + cutout.height),
+          }}
+        />
+      </div>
 
       {/* Highlight cutout ring */}
       <div
         className={clsx(
-          "absolute z-[10000] rounded-lg ring-2 ring-accent-orange pointer-events-none",
-          "transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[0_0_20px_rgba(249,115,22,0.3)]",
+          "absolute z-[10000] rounded-lg ring-2 ring-accent-orange pointer-events-none tutorial-highlight",
+          "shadow-[0_0_20px_rgba(249,115,22,0.3)]",
           !highlightRect && "opacity-0 scale-95"
         )}
         style={{
-          top: highlightRect ? highlightRect.top - 6 : windowSize.height / 2,
-          left: highlightRect ? highlightRect.left - 6 : windowSize.width / 2,
-          width: highlightRect ? highlightRect.width + 12 : 0,
-          height: highlightRect ? highlightRect.height + 12 : 0,
+          top: cutout.top,
+          left: cutout.left,
+          width: cutout.width,
+          height: cutout.height,
         }}
       />
 

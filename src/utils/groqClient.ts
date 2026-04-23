@@ -1,7 +1,4 @@
-// NOTE: This API key is intentionally exposed in the frontend for demo/prototype purposes.
-// In production, this call would be proxied through a backend endpoint.
-
-const GROQ_BASE_URL = 'https://api.groq.com/openai/v1/chat/completions'
+const GROQ_ENDPOINT = 'https://api.groq.com/openai/v1/chat/completions'
 const GROQ_MODEL = 'llama-3.3-70b-versatile'
 
 interface GroqMessage {
@@ -51,7 +48,7 @@ export async function callGroq(
 ): Promise<string> {
   const apiKey = getApiKey()
 
-  const response = await fetch(GROQ_BASE_URL, {
+  const response = await fetch(GROQ_ENDPOINT, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -70,7 +67,12 @@ export async function callGroq(
     throw new Error(`Groq request failed (${response.status}): ${errorBody}`)
   }
 
-  const result = (await response.json()) as GroqResponse
+  let result: GroqResponse
+  try {
+    result = (await response.json()) as GroqResponse
+  } catch {
+    throw new Error('Groq returned an invalid JSON response')
+  }
 
   const content = result.choices?.[0]?.message?.content
   if (!content) {
@@ -91,7 +93,7 @@ export async function callGroqStream(
 ): Promise<void> {
   const apiKey = getApiKey()
 
-  const response = await fetch(GROQ_BASE_URL, {
+  const response = await fetch(GROQ_ENDPOINT, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

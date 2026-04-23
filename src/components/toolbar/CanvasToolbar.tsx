@@ -5,7 +5,7 @@ import {
   Upload,
   Wand2,
 } from 'lucide-react'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useWorkflow } from '@/hooks/useWorkflow'
 import { useWorkflowCritique } from '@/hooks/useWorkflowCritique'
 import { useWorkflowStore } from '@/store/workflowStore'
@@ -20,6 +20,15 @@ export function CanvasToolbar() {
   const { runCritique } = useWorkflowCritique()
 
   const [isEditing, setIsEditing] = useState(false)
+  const [isHoveringTitle, setIsHoveringTitle] = useState(false)
+  const titleInputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    if (isEditing) {
+      titleInputRef.current?.focus()
+      titleInputRef.current?.select()
+    }
+  }, [isEditing])
 
   const handleImport = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -38,25 +47,50 @@ export function CanvasToolbar() {
       {/* Left: Title + subtitle */}
       <div className="flex items-center gap-3">
         <div>
-          {isEditing ? (
-            <input
-              className="border-b border-accent-orange bg-transparent px-1 py-0.5 text-sm font-semibold text-white focus:outline-none"
-              value={workflowName}
-              onChange={(e) => setWorkflowName(e.target.value)}
-              onBlur={() => setIsEditing(false)}
-              onKeyDown={(e) => e.key === 'Enter' && setIsEditing(false)}
-              autoFocus
-              aria-label="Workflow name"
-            />
-          ) : (
-            <h2
-              className="cursor-pointer text-sm font-semibold text-white hover:text-accent-orange"
-              onDoubleClick={() => setIsEditing(true)}
-              title="Double-click to edit"
-            >
-              {workflowName}
-            </h2>
-          )}
+          <div
+            className="inline-flex items-center min-h-[32px]"
+            onMouseEnter={() => setIsHoveringTitle(true)}
+            onMouseLeave={() => {
+              if (!isEditing) {
+                setIsHoveringTitle(false)
+              }
+            }}
+          >
+            {(isEditing || isHoveringTitle) ? (
+              <input
+                ref={titleInputRef}
+                className={clsx(
+                  'ui-transition h-[28px] w-[220px] rounded-md border px-2 text-sm font-semibold text-white focus:outline-none',
+                  'border-accent-orange/30 bg-accent-orange/10 focus:border-accent-orange/60',
+                  'transition-opacity duration-200 ease-out',
+                  !isEditing && 'cursor-pointer'
+                )}
+                style={{ opacity: isEditing || isHoveringTitle ? 1 : 0 }}
+                value={workflowName}
+                onChange={(e) => setWorkflowName(e.target.value)}
+                onBlur={() => {
+                  setIsEditing(false)
+                  setIsHoveringTitle(false)
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    setIsEditing(false)
+                    setIsHoveringTitle(false)
+                  }
+                }}
+                onClick={() => setIsEditing(true)}
+                aria-label="Workflow name"
+              />
+            ) : (
+              <h2
+                className="cursor-pointer text-sm font-semibold text-white hover:text-accent-orange"
+                onClick={() => setIsEditing(true)}
+                title="Click to edit"
+              >
+                {workflowName}
+              </h2>
+            )}
+          </div>
           <p className="text-[11px] text-accent-secondary">Overview of User Workflows</p>
         </div>
       </div>

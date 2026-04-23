@@ -81,7 +81,9 @@ export function useSimulate() {
         }
       )
     } catch (error) {
-      console.error('Narrative generation failed:', error)
+      if (import.meta.env.DEV) {
+        console.error('Narrative generation failed:', error)
+      }
       store.setSimulationNarrative('Narrative generation failed. Please try again.')
     } finally {
       store.setIsNarrating(false)

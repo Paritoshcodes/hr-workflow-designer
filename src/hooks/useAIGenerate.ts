@@ -93,7 +93,9 @@ export function useAIGenerate() {
         const parsed = parseAIJson<WorkflowGraph>(responseText)
 
         if (!parsed || !Array.isArray(parsed.nodes) || !Array.isArray(parsed.edges)) {
-          console.warn('AI returned invalid workflow JSON, loading fallback template')
+          if (import.meta.env.DEV) {
+            console.warn('AI returned invalid workflow JSON, loading fallback template')
+          }
           store.loadWorkflow(getFallbackWorkflow())
           store.setGenerateError('AI returned an invalid format. Loaded a default template instead.')
           return
@@ -101,7 +103,9 @@ export function useAIGenerate() {
 
         store.loadWorkflow(parsed)
       } catch (error) {
-        console.error('AI workflow generation failed:', error)
+        if (import.meta.env.DEV) {
+          console.error('AI workflow generation failed:', error)
+        }
         const message = error instanceof Error ? error.message : 'Failed to generate workflow'
         store.setGenerateError(message)
 

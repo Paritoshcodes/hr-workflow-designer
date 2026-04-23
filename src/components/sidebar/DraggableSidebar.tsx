@@ -28,6 +28,7 @@ interface NavItem {
   label: string
   icon: ReactNode
   active?: boolean
+  isMock?: boolean
 }
 
 interface NavSection {
@@ -39,26 +40,26 @@ const NAV_SECTIONS: NavSection[] = [
   {
     title: 'General',
     items: [
-      { label: 'Dashboard', icon: <LayoutDashboard size={16} /> },
-      { label: 'Compliance', icon: <ShieldCheck size={16} /> },
-      { label: 'Scheduler', icon: <CalendarClock size={16} /> },
-      { label: 'Analytics', icon: <BarChart3 size={16} /> },
+      { label: 'Dashboard', icon: <LayoutDashboard size={16} />, isMock: true },
+      { label: 'Compliance', icon: <ShieldCheck size={16} />, isMock: true },
+      { label: 'Scheduler', icon: <CalendarClock size={16} />, isMock: true },
+      { label: 'Analytics', icon: <BarChart3 size={16} />, isMock: true },
     ],
   },
   {
     title: 'Automation',
     items: [
-      { label: 'Integrations', icon: <Link2 size={16} /> },
-      { label: 'Repository', icon: <Folders size={16} /> },
+      { label: 'Integrations', icon: <Link2 size={16} />, isMock: true },
+      { label: 'Repository', icon: <Folders size={16} />, isMock: true },
       { label: 'Workflows', icon: <Workflow size={16} />, active: true },
     ],
   },
   {
     title: 'Resources',
     items: [
-      { label: 'Member', icon: <Users size={16} /> },
-      { label: 'Inbox', icon: <Inbox size={16} /> },
-      { label: 'Messages', icon: <MessageSquare size={16} /> },
+      { label: 'Member', icon: <Users size={16} />, isMock: true },
+      { label: 'Inbox', icon: <Inbox size={16} />, isMock: true },
+      { label: 'Messages', icon: <MessageSquare size={16} />, isMock: true },
     ],
   },
 ]
@@ -164,11 +165,16 @@ export function DraggableSidebar() {
                   <button
                     key={item.label}
                     type="button"
+                    aria-disabled={item.isMock ? true : undefined}
+                    title={item.isMock ? 'Coming soon' : undefined}
                     className={clsx(
                       'flex w-full items-center gap-3 rounded-md px-3 py-2 text-[13px] transition-colors',
+                      item.isMock && 'cursor-not-allowed opacity-60',
                       item.active
                         ? 'border-l-2 border-accent-orange bg-accent-orange/10 font-medium text-accent-orange'
-                        : 'border-l-2 border-transparent text-zinc-400 hover:bg-canvas-surface hover:text-white'
+                        : item.isMock
+                          ? 'border-l-2 border-transparent text-zinc-400'
+                          : 'border-l-2 border-transparent text-zinc-400 hover:bg-canvas-surface hover:text-white'
                     )}
                   >
                     {item.icon}
@@ -223,19 +229,25 @@ export function DraggableSidebar() {
       <div className="border-t border-canvas-border px-4 py-3 space-y-1">
         <button
           type="button"
-          className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-[13px] text-zinc-500 hover:bg-canvas-surface hover:text-white"
+          aria-disabled
+          title="Coming soon"
+          className="flex w-full cursor-not-allowed items-center gap-3 rounded-md px-3 py-2 text-[13px] text-zinc-500 opacity-60"
         >
           <Settings size={14} /> Settings
         </button>
         <button
           type="button"
-          className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-[13px] text-zinc-500 hover:bg-canvas-surface hover:text-white"
+          aria-disabled
+          title="Coming soon"
+          className="flex w-full cursor-not-allowed items-center gap-3 rounded-md px-3 py-2 text-[13px] text-zinc-500 opacity-60"
         >
           <HelpCircle size={14} /> Help & Support
         </button>
         <button
           type="button"
-          className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-[13px] text-zinc-500 hover:bg-canvas-surface hover:text-white"
+          aria-disabled
+          title="Coming soon"
+          className="flex w-full cursor-not-allowed items-center gap-3 rounded-md px-3 py-2 text-[13px] text-zinc-500 opacity-60"
         >
           <BookOpen size={14} /> Documentation
         </button>

@@ -7,7 +7,7 @@ const NODE_HEIGHT = 90
 export function applyDagreLayout(nodes: WorkflowNode[], edges: WorkflowEdge[]): WorkflowNode[] {
   const graph = new dagre.graphlib.Graph()
   graph.setDefaultEdgeLabel(() => ({}))
-  graph.setGraph({ rankdir: 'TB', nodesep: 80, ranksep: 110 })
+  graph.setGraph({ rankdir: 'TB', nodesep: 90, ranksep: 120 })
 
   nodes.forEach((node) => {
     graph.setNode(node.id, { width: NODE_WIDTH, height: NODE_HEIGHT })

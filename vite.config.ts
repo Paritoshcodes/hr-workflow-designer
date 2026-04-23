@@ -8,6 +8,11 @@ export default defineConfig({
   resolve: {
     alias: { '@': path.resolve(__dirname, './src') },
   },
+  build: {
+    sourcemap: false,
+    minify: true,
+    chunkSizeWarningLimit: 800,
+  },
   test: {
     globals: true,
     environment: 'jsdom',

@@ -87,7 +87,9 @@ What nodes should come next?`
 
         store.setSuggestions(validSuggestions, nodeId)
       } catch (error) {
-        console.error('Node suggestion generation failed:', error)
+        if (import.meta.env.DEV) {
+          console.error('Node suggestion generation failed:', error)
+        }
         store.clearSuggestions()
       }
     },

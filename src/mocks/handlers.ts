@@ -32,12 +32,12 @@ function getStepMessage(type: NodeType, title: string): string {
 }
 
 export const handlers = [
-  http.get('/automations', async () => {
+  http.get('/api/automations', async () => {
     await delay(120)
     return HttpResponse.json(AUTOMATIONS)
   }),
 
-  http.post('/simulate', async ({ request }) => {
+  http.post('/api/simulate', async ({ request }) => {
     await delay(300)
 
     const body = (await request.json()) as SerializedWorkflow

@@ -18,6 +18,7 @@ HR Workflow Designer is a canvas-first workflow editor that allows users to:
 - Generate workflows and insights using AI
 - Import/export workflows as JSON
 - Use templates for quick onboarding
+- Track usage and performance with Vercel Analytics and Vercel Speed Insights
 
 ---
 
@@ -90,10 +91,10 @@ Fields Supported:
 
 ### 🔌 Mock API Layer
 
-Using MSW (Mock Service Worker):
+Using MSW (Mock Service Worker) in local development and Vercel serverless routes in production:
 
-- GET /automations  
-- POST /simulate  
+- GET /api/automations  
+- POST /api/simulate  
 
 ---
 
@@ -181,6 +182,8 @@ E2E Testing (Cypress):
 - Graph Layout: Dagre  
 - Mocking: MSW  
 - AI Integration: Groq API  
+- Analytics: Vercel Analytics  
+- Performance Monitoring: Vercel Speed Insights  
 - Testing: Vitest + Cypress  
 
 ---

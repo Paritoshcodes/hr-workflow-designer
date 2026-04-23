@@ -23,7 +23,9 @@ export function parseAIJson<T>(raw: string): T | null {
     const jsonSlice = cleaned.slice(firstBrace, lastBrace + 1)
     return JSON.parse(jsonSlice) as T
   } catch {
-    console.error('Failed to parse AI JSON response:', raw.slice(0, 500))
+    if (import.meta.env.DEV) {
+      console.error('Failed to parse AI JSON response:', raw.slice(0, 500))
+    }
     return null
   }
 }

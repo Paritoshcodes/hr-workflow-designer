@@ -127,6 +127,9 @@ function FlowCanvas() {
           onPaneClick={handlePaneClick}
           onNodeClick={(_, node) => selectNode(node.id)}
           fitView
+          fitViewOptions={{ padding: 0.3, maxZoom: 1.1 }}
+          minZoom={0.4}
+          maxZoom={1.2}
           className="bg-canvas-bg"
         >
           <MiniMap

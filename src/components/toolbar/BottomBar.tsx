@@ -46,7 +46,7 @@ export function BottomBar() {
 
     loadWorkflow({ nodes: laidOut, edges: straightEdges })
     requestAnimationFrame(() => {
-      fitView({ padding: 0.28, duration: 450, minZoom: 0.2, maxZoom: 1.1 })
+      fitView({ padding: 0.3, duration: 280, minZoom: 0.4, maxZoom: 1.05 })
     })
   }
 
@@ -59,7 +59,7 @@ export function BottomBar() {
         </span>
         <button
           type="button"
-          onClick={() => zoomOut()}
+          onClick={() => zoomOut({ duration: 180 })}
           className="ui-transition rounded-md p-1 text-zinc-500 hover:bg-canvas-bg hover:text-white"
           aria-label="Zoom out"
         >
@@ -67,7 +67,7 @@ export function BottomBar() {
         </button>
         <button
           type="button"
-          onClick={() => zoomIn()}
+          onClick={() => zoomIn({ duration: 180 })}
           className="ui-transition rounded-md p-1 text-zinc-500 hover:bg-canvas-bg hover:text-white"
           aria-label="Zoom in"
         >
@@ -75,7 +75,7 @@ export function BottomBar() {
         </button>
         <button
           type="button"
-          onClick={() => fitView({ padding: 0.28, duration: 450 })}
+          onClick={() => fitView({ padding: 0.3, duration: 280, minZoom: 0.4, maxZoom: 1.1 })}
           className="ui-transition rounded-md p-1 text-zinc-500 hover:bg-canvas-bg hover:text-white"
           aria-label="Fit to view"
         >
