@@ -1,0 +1,218 @@
+@import "tailwindcss";
+
+@theme {
+	--color-canvas-bg: #0E0F11;
+	--color-canvas-surface: #1C1D22;
+	--color-canvas-border: #2A2B32;
+	--color-surface-sidebar: #14151A;
+	--color-node-start: #10b981;
+	--color-node-task: #0ea5e9;
+	--color-node-approval: #f59e0b;
+	--color-node-automated: #8b5cf6;
+	--color-node-end: #f43f5e;
+	--color-accent-primary: #F97316;
+	--color-accent-secondary: #71717A;
+	--color-accent-orange: #F97316;
+	--color-border-subtle: #2A2B32;
+}
+
+:root {
+	color-scheme: dark;
+	--ui-ease: cubic-bezier(0.22, 1, 0.36, 1);
+	--ui-duration-fast: 160ms;
+	--ui-duration: 240ms;
+	--ui-duration-slow: 360ms;
+}
+
+html,
+body,
+#root {
+	height: 100%;
+	margin: 0;
+}
+
+body {
+	font-family: 'DM Sans', sans-serif;
+	background: #0E0F11;
+	color: #F4F4F5;
+}
+
+@keyframes ui-fade-up {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes pulse-orange-glow {
+	0%, 100% {
+		box-shadow: 0 0 0 0 rgba(249, 115, 22, 0);
+		border-color: #F97316;
+	}
+	50% {
+		box-shadow: 0 0 16px 4px rgba(249, 115, 22, 0.4);
+		border-color: #F97316;
+	}
+}
+
+@keyframes shimmer-progress {
+	0% { background-position: -200% 0; }
+	100% { background-position: 200% 0; }
+}
+
+@keyframes slide-in-right {
+	from {
+		opacity: 0;
+		transform: translateX(100%);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes blink-cursor {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0; }
+}
+
+.ui-transition {
+	transition:
+		transform var(--ui-duration) var(--ui-ease),
+		opacity var(--ui-duration-fast) var(--ui-ease),
+		box-shadow var(--ui-duration) var(--ui-ease),
+		color var(--ui-duration-fast) var(--ui-ease),
+		background-color var(--ui-duration-fast) var(--ui-ease),
+		border-color var(--ui-duration-fast) var(--ui-ease);
+	will-change: transform;
+}
+
+.ui-lift:hover {
+	transform: translateY(-2px);
+}
+
+.ui-lift:active {
+	transform: translateY(0);
+}
+
+.ui-panel-enter {
+	animation: ui-fade-up var(--ui-duration-slow) var(--ui-ease) both;
+}
+
+.ui-slide-in-right {
+	animation: slide-in-right 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ui-pulse-orange {
+	animation: pulse-orange-glow 0.75s ease-in-out 2;
+}
+
+.ui-shimmer {
+	background: linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.15), transparent);
+	background-size: 200% 100%;
+	animation: shimmer-progress 1.5s ease-in-out infinite;
+}
+
+.ui-blink-cursor::after {
+	content: '▌';
+	animation: blink-cursor 0.8s step-end infinite;
+	color: #F97316;
+}
+
+/* Canvas dot-grid background */
+.dot-grid-bg {
+	background-image: radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+	background-size: 24px 24px;
+}
+
+.react-flow__renderer {
+	background: #0E0F11;
+}
+
+.react-flow__edge-path {
+	stroke: #F97316;
+	stroke-width: 2;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+	stroke: #fb923c;
+}
+
+.react-flow__connection-path {
+	stroke: #F97316;
+	stroke-width: 2;
+	stroke-dasharray: 5, 5;
+}
+
+.react-flow__controls {
+	background: #1C1D22 !important;
+	border: 1px solid #2A2B32 !important;
+	border-radius: 12px !important;
+	overflow: hidden;
+}
+
+.react-flow__controls-button {
+	background: #1C1D22 !important;
+	border-bottom: 1px solid #2A2B32 !important;
+	color: #71717A !important;
+}
+
+.react-flow__controls-button:hover {
+	background: #2A2B32 !important;
+	color: #F4F4F5 !important;
+}
+
+.react-flow__controls-button svg {
+	fill: currentColor !important;
+}
+
+.react-flow__minimap {
+	background: #1C1D22 !important;
+	border: 1px solid #2A2B32 !important;
+	border-radius: 12px !important;
+	overflow: hidden;
+}
+
+.react-flow__node.selected > div {
+	outline: none !important;
+}
+
+select option {
+	color: #0f172a;
+	background-color: #f3f4f6;
+}
+
+select option:checked,
+select option:hover {
+	color: #0f172a;
+	background-color: #fdba74;
+}
+
+::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+
+::-webkit-scrollbar-track {
+	background: #1C1D22;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #2A2B32;
+	border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #F97316;
+}
+
+* {
+	box-sizing: border-box;
+	transition-property: color, background-color, border-color, opacity;
+	transition-duration: 150ms;
+	transition-timing-function: ease;
+}
